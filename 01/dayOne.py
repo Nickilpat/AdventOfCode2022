@@ -1,4 +1,4 @@
-input_file = open("input1.txt", "r")
+input_file = open("01/input1.txt", "r")
 calorie_entries = input_file.read().split('\n')
 input_file.close()
 
