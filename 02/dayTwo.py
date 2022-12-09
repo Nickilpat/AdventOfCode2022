@@ -38,20 +38,65 @@ def convert(shape):
         return 'C'
 
 def solvePartOne():
+    total_score = 0
+    round_score = 0
     for round in rps_rounds:
         round_shapes = round.split()
         opp = round_shapes[0]
         you = convert(round_shapes[1])
         round_score += points_for_shape(you)
         round_score += points_for_result(opp, you)
-        print("round score: " + str(round_score))
+        # print("round score: " + str(round_score))
         total_score += round_score
         round_score = 0
 
     print(total_score)
 
+def what_to_play(opp, target_result):
+    if target_result == 'Y': # draw
+        # print("draw")
+        return opp
+    elif target_result == 'Z': # win
+        # print("win")
+        if opp == 'A':
+            return 'B'
+        elif opp == 'B':
+            return 'C'
+        else:
+            return 'A'
+    else: # lose
+        # print("lose")
+        if opp == 'A':
+            return 'C'
+        elif opp == 'B':
+            return 'A'
+        else:
+            return 'B'
 
+def solvePartTwo():
+    total_score = 0
+    round_score = 0
+    for round in rps_rounds:
+        round_info = round.split()
+        opp = round_info[0]
+        # print("opponent plays: " + str(opp))
+        target_result = round_info[1]
+        you = what_to_play(opp, target_result)
+        # print("you play: " + str(you))
 
-total_score = 0
-round_score = 0
-solvePartOne()
+        points_shape = points_for_shape(you)
+        round_score += points_shape
+        # print("points for shape: " + str(points_shape))
+
+        points_result = points_for_result(opp, you)
+        round_score += points_result
+        # print("points for result: " + str(points_result))
+
+        total_score += round_score
+        round_score = 0
+        # print()
+
+    print(total_score)
+
+# solvePartOne()
+solvePartTwo()
